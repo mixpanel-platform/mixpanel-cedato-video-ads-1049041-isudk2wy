@@ -1,15 +1,276 @@
 <!DOCTYPE html>
-<html>
+<html lang='en'>
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Live Dashboard</title>
+    <!-- latest jquery -->
+    <script   src="https://code.jquery.com/jquery-2.2.4.js"   integrity="sha256-iT6Q9iMJYuQiMWNd9lDyBUStIq/8PuOW33aOqmvFpqI="   crossorigin="anonymous"></script>
+
+    <!--mixpanel platform -->
     <link rel="stylesheet" type="text/css" href="https://cdn.mxpnl.com/libs/mixpanel-platform/css/reset.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.css">
-    <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
+    <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script> <!--/mixpanel platform -->
+
+
+    <!--tether for tooltips-->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/tether/1.3.1/js/tether.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript Bootstrap-->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <!-- Latest compiled and minified CSS Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+    <!-- Optional theme Bootstrap-->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+
+    <!-- csv export source: http://www.jqueryscript.net/table/jQuery-Plugin-To-Convert-HTML-Table-To-CSV-tabletoCSV.html-->
+    <script src="js/jquery.tabletoCSV.js"></script>
+
+    <!--font awesome icons-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+
+    <!--custom styles-->
+    <link rel="stylesheet" href="style.css">
+
+
   </head>
   <body class="mixpanel-platform-body">
-    <h1>Hello, World!</h1>
-    <script>
-      // Run queries and display results here
-    </script>
+    <div class="container-fluid" id='pannel-container'>
+      <div class="row">
+          <div class="col-sm-3 col-sm-6">
+              <div class="panel panel-mpblue">
+                  <div class="panel-heading">
+                      <div class="row">
+                          <div class="col-xs-3">
+                              <i class="fa fa-users fa-4x" aria-hidden="true"></i>
+                          </div>
+                          <div class="col-xs-9 text-right">
+                              <div class="huge" id="dau-header">0</div>
+                              <div class="panel-text">Users Today</div>
+                          </div>
+                      </div>
+                  </div>
+                  <a href="#">
+                      <div class="panel-footer panel-footer-dau">
+                          <span class="pull-left">View Details</span>
+                          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                          <div class="clearfix"></div>
+                      </div>
+                  </a>
+              </div>
+          </div>
+          <div class="col-sm-3 col-sm-6">
+              <div class="panel panel-mpblue">
+                  <div class="panel-heading">
+                      <div class="row">
+                          <div class="col-xs-3">
+                              <i class="fa fa-line-chart fa-4x" aria-hidden="true"></i>
+                          </div>
+                          <div class="col-xs-9 text-right">
+                              <div class="huge" id="live-users">0</div>
+                              <div class="panel-text">Live Video Views</div>
+                          </div>
+                      </div>
+                  </div>
+                  <a href="#">
+                      <div class="panel-footer panel-footer-mau">
+                          <span class="pull-left">View Details</span>
+                          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                          <div class="clearfix"></div>
+                      </div>
+                  </a>
+              </div>
+          </div>
+          <div class="col-sm-3 col-sm-6">
+              <div class="panel panel-mpblue">
+                  <div class="panel-heading">
+                      <div class="row">
+                          <div class="col-xs-3">
+                              <i class="fa fa-shopping-cart fa-4x"></i>
+                          </div>
+                          <div class="col-xs-9 text-right">
+                              <div class="huge" id="revenue-panel">0</div>
+                              <div class="panel-text">Revenue Today</div>
+                          </div>
+                      </div>
+                  </div>
+                  <a href="#">
+                      <div class="panel-footer panel-footer-revenue">
+                          <span class="pull-left">View Details</span>
+                          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                          <div class="clearfix"></div>
+                      </div>
+                  </a>
+              </div>
+          </div>
+          <div class="col-sm-3 col-sm-6">
+              <div class="panel panel-mpblue">
+                  <div class="panel-heading">
+                      <div class="row">
+                          <div class="col-xs-3">
+                              <i class="fa fa-bar-chart fa-4x" aria-hidden="true"></i>
+                          </div>
+                          <div class="col-xs-9 text-right">
+                              <div class="huge" id="videos-today-panel">0</div>
+                              <div class="panel-text">Total Videos Served Today</div>
+                          </div>
+                      </div>
+                  </div>
+                  <a href="#">
+                      <div class="panel-footer panel-footer-avg-events">
+                          <span class="pull-left">View Details</span>
+                          <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
+                          <div class="clearfix"></div>
+                      </div>
+                  </a>
+              </div>
+          </div>
+      </div>
+    </div><!--end of header panel contianers-->
+    <div class="container-fluid" id='live-container'>
+      <div class="row  div-container">
+        <div class="col-sm-10">
+          <div class="" id="live-platforms"></div>
+        </div>
+      <div class="col-sm-2 text-center " style="margin-top: 122.5px; color: #3E576F:">
+        <span class="count_top">Total Video Views</span>
+        <div class="count" id="live-streams">0</div>
+        <span class="count_bottom" ><b class="green" id="change-from-last-week-streams">0</b><b class="green" id="percentage">%</b> From Yesterday</span>
+      </div>
+    </div><!--end of live container-->
+    <div class="container-fluid" id='top-videos-container'>
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="div-container" id="top-movie-pages"></div>
+        </div>
+        <div class="col-sm-4">
+          <div class="div-container" id="top-referers"></div>
+        </div>
+        <div class="col-sm-4">
+          <div class="div-container" id="top-searches"></div>
+        </div>
+      </div>
+    </div><!-- end of top bar graphs -->
+    <!-- start of videos by platform -->
+    <div class="row text-center div-container">
+      <!-- <div class="col-sm-1"></div> -->
+      <div class="col-sm-4 text-center">
+        <br>
+        <i class="fa fa-apple fa-3x" aria-hidden="true"></i>
+        <table class="table" data-toggle="table" data-sort-name="value" data-sort-order="asc" id="apple-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th data-field="value" data-sortable="true">Stream Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" id="movie-1">1</th>
+              <td id="value-1">Mark</td>
+            </tr>
+            <tr>
+              <th scope="row" id="movie-2">2</th>
+              <td id="value-2">Jacob</td>
+            </tr>
+            <tr>
+              <th scope="row" id="movie-3">3</th>
+              <td id="value-3">Larry</td>
+            </tr>
+            <tr>
+              <th scope="row" id="movie-4">3</th>
+              <td id="value-4">Larry</td>
+            </tr>
+            <tr>
+              <th scope="row" id="movie-5">3</th>
+              <td id="value-5">Larry</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-sm-4 text-center">
+        <br>
+        <i class="fa fa-android fa-3x" aria-hidden="true"></i>
+        <table class="table" data-toggle="table"
+         data-sort-name="count"
+         data-sort-order="desc" id="android-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th data-field="count" data-sortable="true">Stream Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" id="movie-1">1</th>
+              <td id="value-1">Mark</td>
+            </tr>
+            <tr>
+              <th scope="row" id="movie-2">2</th>
+              <td id="value-2">Jacob</td>
+            </tr>
+            <tr>
+              <th scope="row" id="movie-3">3</th>
+              <td id="value-3">Larry</td>
+            </tr>
+            <tr>
+              <th scope="row" id="movie-4">3</th>
+              <td id="value-4">Larry</td>
+            </tr>
+            <tr>
+              <th scope="row" id="movie-5">3</th>
+              <td id="value-5">Larry</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-sm-4 text-center">
+        <br>
+        <i class="fa fa-chrome fa-3x" aria-hidden="true"></i>
+        <table class="table" id="web-table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Stream Count</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <th scope="row" id="movie-1">1</th>
+              <td id="value-1">Mark</td>
+            </tr>
+            <tr>
+              <th scope="row" id="movie-2">2</th>
+              <td id="value-2">Jacob</td>
+            </tr>
+            <tr>
+              <th scope="row" id="movie-3">3</th>
+              <td id="value-3">Larry</td>
+            </tr>
+            <tr>
+              <th scope="row" id="movie-4">3</th>
+              <td id="value-4">Larry</td>
+            </tr>
+            <tr>
+              <th scope="row" id="movie-5">3</th>
+              <td id="value-5">Larry</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- <div class="col-sm-1"></div> -->
+    </div>
+    <script type="text/javascript" src="js/helperfunctions.js"></script>
+    <script type="text/javascript" src="js/activeUsers.js"></script>
+    <script type="text/javascript" src="js/livePlatforms.js"></script>
+    <script type="text/javascript" src="js/topVideos.js"></script>
+    <script type="text/javascript" src="js/topReferers.js"></script>
+    <script type="text/javascript" src="js/topSearches.js"></script>
+    <script type="text/javascript" src="js/topStreams.js"></script>
+    
   </body>
 </html>
